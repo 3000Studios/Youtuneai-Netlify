@@ -259,7 +259,15 @@
         <h2>Voice Control Panel</h2>
         <p>Speak changes and see the page update live. Commands are captured locally.</p>
       </div>
-      <div class="control-grid">
+      <div class="control-lock" id="control-lock">
+        <p>Enter the access code to unlock the control panel.</p>
+        <div class="control-lock-row">
+          <input type="password" id="control-password" placeholder="Access code" />
+          <button class="primary" id="unlock-control">Unlock</button>
+        </div>
+        <p class="control-lock-note" id="control-lock-note"></p>
+      </div>
+      <div class="control-grid" id="control-grid">
         <div class="control-panel">
           <div class="panel-actions">
             <button class="primary" id="start-voice">Start Listening</button>
