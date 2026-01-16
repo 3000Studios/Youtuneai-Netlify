@@ -43,6 +43,9 @@ const elements = {
   contactLink: document.getElementById('contact-link'),
   contactFooter: document.getElementById('contact-footer'),
   cursorDot: document.getElementById('cursor-dot'),
+  ticker: document.getElementById('ticker'),
+  tickerData: document.getElementById('ticker-data'),
+  avatar: document.getElementById('avatar'),
   controlLock: document.getElementById('control-lock'),
   controlGrid: document.getElementById('control-grid'),
   controlPassword: document.getElementById('control-password'),
@@ -241,6 +244,56 @@ const setupAudio = () => {
   audio.play().catch(() => {});
 };
 
+const setupTicker = () => {
+  if (!elements.ticker || !elements.tickerData) return;
+  const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd';
+  const update = async () => {
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      const items = Object.entries(data).map(([k, v]) => `${k.toUpperCase()}: $${(v.usd || 0).toLocaleString()}`);
+      elements.tickerData.textContent = items.join('   •   ');
+    } catch (e) {
+      elements.tickerData.textContent = 'Live market data unavailable';
+    }
+  };
+  update();
+  setInterval(update, 45000);
+};
+
+const setupAvatar = () => {
+  const avatar = elements.avatar;
+  if (!avatar) return;
+  let dragging = false;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  const start = (e) => {
+    dragging = true;
+    avatar.style.cursor = 'grabbing';
+    offsetX = e.clientX - avatar.offsetLeft;
+    offsetY = e.clientY - avatar.offsetTop;
+  };
+  const move = (e) => {
+    if (!dragging) return;
+    avatar.style.left = `${e.clientX - offsetX}px`;
+    avatar.style.top = `${e.clientY - offsetY}px`;
+  };
+  const end = () => {
+    dragging = false;
+    avatar.style.cursor = 'grab';
+  };
+  avatar.addEventListener('pointerdown', start);
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', end);
+
+  window.addEventListener('deviceorientation', (e) => {
+    const tiltX = e.gamma || 0;
+    const tiltY = e.beta || 0;
+    avatar.style.transform = `rotateX(${tiltY * 0.02}deg) rotateY(${tiltX * 0.02}deg)`;
+  });
+};
+
 const init = () => {
   loadState();
   applyState();
@@ -249,6 +302,8 @@ const init = () => {
   setupCursor();
   setupContactModal();
   setupAudio();
+  setupTicker();
+  setupAvatar();
 
   const recognition = setupVoice();
   const startButton = document.getElementById('start-voice');

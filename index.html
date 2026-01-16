@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="video-bg" aria-hidden="true">
+    <video src="https://cdn.coverr.co/videos/coverr-future-is-calling-3845/1080p.mp4" autoplay muted loop playsinline></video>
+  </div>
   <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
   <div class="bg-noise" aria-hidden="true"></div>
   <div class="edge-glow" aria-hidden="true"></div>
@@ -41,6 +44,9 @@
   </header>
 
   <main class="page">
+    <div class="avatar" id="avatar">
+      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80" alt="AI Avatar" />
+    </div>
     <section class="hero" id="offer">
       <div class="hero-copy">
         <p class="eyebrow" id="eyebrow">AI-Driven Growth Stack</p>
@@ -357,6 +363,10 @@
         <button type="submit" class="primary">Send</button>
       </form>
     </div>
+  </div>
+
+  <div class="ticker" id="ticker" aria-live="polite">
+    <span id="ticker-data">Loading markets...</span>
   </div>
 
   <script src="app.js"></script>
