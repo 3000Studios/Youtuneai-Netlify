@@ -42,10 +42,14 @@ const elements = {
   contactClose: document.getElementById('contact-close'),
   contactLink: document.getElementById('contact-link'),
   contactFooter: document.getElementById('contact-footer'),
+  contactLinkMobile: document.getElementById('contact-link-mobile'),
   cursorDot: document.getElementById('cursor-dot'),
   ticker: document.getElementById('ticker'),
   tickerData: document.getElementById('ticker-data'),
   avatar: document.getElementById('avatar'),
+  menuToggle: document.getElementById('menu-toggle'),
+  mobileDrawer: document.getElementById('mobile-drawer'),
+  mobileLinks: document.querySelectorAll('.mobile-drawer a'),
   controlLock: document.getElementById('control-lock'),
   controlGrid: document.getElementById('control-grid'),
   controlPassword: document.getElementById('control-password'),
@@ -223,6 +227,7 @@ const setupContactModal = () => {
   const close = () => elements.contactModal?.classList.remove('show');
   elements.contactLink?.addEventListener('click', (e) => { e.preventDefault(); open(); });
   elements.contactFooter?.addEventListener('click', (e) => { e.preventDefault(); open(); });
+  elements.contactLinkMobile?.addEventListener('click', (e) => { e.preventDefault(); open(); });
   elements.contactClose?.addEventListener('click', close);
   elements.contactModal?.addEventListener('click', (e) => {
     if (e.target === elements.contactModal) close();
@@ -294,6 +299,17 @@ const setupAvatar = () => {
   });
 };
 
+const setupMobileNav = () => {
+  if (!elements.menuToggle || !elements.mobileDrawer) return;
+  const toggle = () => elements.mobileDrawer.classList.toggle('show');
+  const close = () => elements.mobileDrawer.classList.remove('show');
+  elements.menuToggle.addEventListener('click', toggle);
+  elements.mobileDrawer.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') close();
+  });
+  elements.mobileLinks.forEach((link) => link.addEventListener('click', close));
+};
+
 const init = () => {
   loadState();
   applyState();
@@ -304,6 +320,7 @@ const init = () => {
   setupAudio();
   setupTicker();
   setupAvatar();
+  setupMobileNav();
 
   const recognition = setupVoice();
   const startButton = document.getElementById('start-voice');

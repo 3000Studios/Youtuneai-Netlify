@@ -154,6 +154,51 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 0.5rem 0.9rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 82%;
+  max-width: 360px;
+  height: 100vh;
+  background: rgba(10, 12, 16, 0.95);
+  backdrop-filter: blur(14px);
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+  transition: right 0.3s ease;
+  z-index: 25;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-drawer.show {
+  right: 0;
+}
+
+.mobile-drawer video {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobile-drawer a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .brand {
   display: flex;
   gap: 0.75rem;
@@ -840,6 +885,11 @@ body {
 @media (max-width: 960px) {
   .nav {
     display: none;
+  }
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
   }
   .site-header {
     flex-wrap: wrap;
