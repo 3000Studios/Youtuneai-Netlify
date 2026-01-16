@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YoutuneAI Admin</title>
+  <meta name="description" content="Voice-driven admin console for YoutuneAI." />
+  <link rel="stylesheet" href="./admin.css" />
+  <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <div class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <h1>YoutuneAI Voice Command Center</h1>
+        <p>Secure admin console for hands-free site edits and deploys.</p>
+      </div>
+      <div class="admin-actions">
+        <button id="login" class="ghost">Log in</button>
+        <button id="logout" class="ghost">Log out</button>
+      </div>
+    </header>
+
+    <main class="admin-grid">
+      <section class="card">
+        <h2>Status</h2>
+        <p id="status">Checking authentication...</p>
+        <div class="pill-row">
+          <span class="pill">Netlify Identity</span>
+          <span class="pill">GitHub PR flow</span>
+        </div>
+        <div class="button-row">
+          <button id="start" class="primary">Start Listening</button>
+          <button id="stop" class="secondary">Stop Listening</button>
+        </div>
+        <p class="muted" id="mic-state">Microphone idle.</p>
+      </section>
+
+      <section class="card">
+        <h2>Command</h2>
+        <textarea id="command" rows="6" placeholder="Speak or type a command..."></textarea>
+        <div class="button-row">
+          <button id="plan" class="primary">Generate Plan</button>
+          <button id="apply" class="secondary">Approve & Create PR</button>
+        </div>
+        <p class="muted">Example: "Update the headline to Boost pipeline velocity" or "Create a new page for /partners".</p>
+      </section>
+
+      <section class="card wide">
+        <h2>Response</h2>
+        <pre id="response">{}</pre>
+        <div class="button-row">
+          <button id="rollback" class="ghost">Rollback Last Commit (PR)</button>
+        </div>
+        <p class="muted">PRs are opened for review; say "Approve deploy" after reviewing on GitHub.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="./admin.js"></script>
+</body>
+</html>

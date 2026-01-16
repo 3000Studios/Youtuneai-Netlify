@@ -537,6 +537,38 @@ body {
   gap: 2rem;
 }
 
+.control-lock {
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 2rem;
+  display: none;
+}
+
+.control-lock-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.control-lock input {
+  background: #0f141c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  font-family: inherit;
+  min-width: 220px;
+}
+
+.control-lock-note {
+  margin-top: 0.8rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .control-panel {
   background: var(--surface);
   border-radius: 24px;

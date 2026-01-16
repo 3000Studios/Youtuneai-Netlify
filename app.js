@@ -12,6 +12,8 @@ const state = {
 };
 
 const storageKey = 'youtuneai-state';
+const controlKey = 'youtuneai-control-unlocked';
+const controlPassword = '5555';
 
 const elements = {
   eyebrow: document.getElementById('eyebrow'),
@@ -24,6 +26,11 @@ const elements = {
   metric3: document.getElementById('metric3'),
   testimonials: document.getElementById('testimonials'),
   transcript: document.getElementById('transcript'),
+  controlLock: document.getElementById('control-lock'),
+  controlGrid: document.getElementById('control-grid'),
+  controlPassword: document.getElementById('control-password'),
+  controlUnlock: document.getElementById('unlock-control'),
+  controlNote: document.getElementById('control-lock-note'),
   inputs: {
     headline: document.getElementById('headline-input'),
     subhead: document.getElementById('subhead-input'),
@@ -38,6 +45,14 @@ const elements = {
 
 const applyTheme = (theme) => {
   document.documentElement.dataset.theme = theme === 'ember' ? '' : theme;
+};
+
+const isControlUnlocked = () => sessionStorage.getItem(controlKey) === 'true';
+
+const setControlVisibility = () => {
+  const unlocked = isControlUnlocked();
+  elements.controlLock.style.display = unlocked ? 'none' : 'block';
+  elements.controlGrid.style.display = unlocked ? 'grid' : 'none';
 };
 
 const applyState = () => {
@@ -180,6 +195,7 @@ const init = () => {
   loadState();
   applyState();
   setupReveal();
+  setControlVisibility();
 
   const recognition = setupVoice();
   const startButton = document.getElementById('start-voice');
@@ -199,6 +215,18 @@ const init = () => {
   });
 
   applyButton.addEventListener('click', updateFromInputs);
+
+  elements.controlUnlock.addEventListener('click', () => {
+    const value = elements.controlPassword.value.trim();
+    if (value === controlPassword) {
+      sessionStorage.setItem(controlKey, 'true');
+      elements.controlPassword.value = '';
+      elements.controlNote.textContent = '';
+      setControlVisibility();
+      return;
+    }
+    elements.controlNote.textContent = 'Incorrect access code.';
+  });
 };
 
 init();

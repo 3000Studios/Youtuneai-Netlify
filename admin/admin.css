@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap");
+
+:root {
+  color-scheme: dark;
+  --bg: #0b0c10;
+  --surface: #141922;
+  --surface-2: #1b2230;
+  --text: #f7f4ee;
+  --muted: #b3bcc7;
+  --accent: #f1b35a;
+  --accent-2: #66e0d3;
+  --ring: rgba(241, 179, 90, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, rgba(241, 179, 90, 0.16), transparent 55%), var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.admin-shell {
+  padding: 3rem 6vw 4rem;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+  margin: 0 0 0.6rem;
+  font-family: "Syne", "Segoe UI", sans-serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+}
+
+.admin-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.admin-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.card {
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 1.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 220px;
+}
+
+.card.wide {
+  grid-column: 1 / -1;
+}
+
+.pill-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 1.5rem;
+}
+
+.pill {
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.button-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.primary,
+.secondary,
+.ghost {
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.4rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.primary {
+  background: linear-gradient(140deg, var(--accent), var(--accent-2));
+  color: #0a0a0a;
+  font-weight: 600;
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text);
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+}
+
+textarea {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  border-radius: 16px;
+  padding: 0.9rem;
+  font-family: inherit;
+}
+
+pre {
+  background: #0f141c;
+  border-radius: 16px;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 140px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 720px) {
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
