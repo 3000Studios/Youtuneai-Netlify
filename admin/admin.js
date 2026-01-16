@@ -12,6 +12,8 @@ const rollbackBtn = document.getElementById("rollback");
 
 let recognition;
 let lastPlan = null;
+const PASSCODE = "5555";
+const UNLOCK_KEY = "yt-admin-unlocked";
 
 const setStatus = (text) => {
   statusEl.textContent = text;
@@ -64,6 +66,34 @@ const initIdentity = () => {
   });
 
   window.netlifyIdentity.init();
+};
+
+const setLockedUI = (locked) => {
+  lockScreen.style.display = locked ? "grid" : "none";
+  adminShell.style.filter = locked ? "blur(8px)" : "none";
+  [startBtn, stopBtn, planBtn, applyBtn, rollbackBtn, commandEl].forEach((el) => {
+    el.disabled = locked;
+  });
+};
+
+const initPasscodeGate = () => {
+  const unlocked = sessionStorage.getItem(UNLOCK_KEY) === "true";
+  setLockedUI(!unlocked);
+
+  const unlock = () => {
+    if (lockInput.value.trim() === PASSCODE) {
+      sessionStorage.setItem(UNLOCK_KEY, "true");
+      lockError.textContent = "";
+      setLockedUI(false);
+      return;
+    }
+    lockError.textContent = "Incorrect code.";
+  };
+
+  lockButton.addEventListener("click", unlock);
+  lockInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") unlock();
+  });
 };
 
 const initSpeech = () => {
@@ -149,4 +179,10 @@ rollbackBtn.addEventListener("click", async () => {
 });
 
 initIdentity();
+initPasscodeGate();
 initSpeech();
+const lockScreen = document.getElementById("lock-screen");
+const lockInput = document.getElementById("lock-input");
+const lockButton = document.getElementById("lock-button");
+const lockError = document.getElementById("lock-error");
+const adminShell = document.querySelector(".admin-shell");

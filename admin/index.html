@@ -9,6 +9,18 @@
   <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
+  <div class="lock-screen" id="lock-screen">
+    <div class="lock-card">
+      <h2>Enter access code</h2>
+      <p>Unlock to use the voice editor.</p>
+      <div class="lock-row">
+        <input type="password" id="lock-input" placeholder="Access code" />
+        <button id="lock-button" class="primary">Unlock</button>
+      </div>
+      <p class="muted" id="lock-error"></p>
+    </div>
+  </div>
+
   <div class="admin-shell">
     <header class="admin-header">
       <div>
