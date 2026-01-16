@@ -11,7 +11,9 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
   <div class="bg-noise" aria-hidden="true"></div>
+  <div class="edge-glow" aria-hidden="true"></div>
   <div class="bg-orb orb-1" aria-hidden="true"></div>
   <div class="bg-orb orb-2" aria-hidden="true"></div>
   <div class="bg-grid" aria-hidden="true"></div>
@@ -24,11 +26,16 @@
       </div>
     </div>
     <nav class="nav">
-      <a href="#offer">Offer</a>
-      <a href="#proof">Proof</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#control">Control Panel</a>
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="livestream.html">Live Stream</a>
+      <a href="blog.html">Blog</a>
+      <a href="store.html">Store</a>
+      <a href="appstore.html">App Store</a>
+      <a href="referrals.html">Referrals</a>
+      <a href="projects.html">Current Projects</a>
       <a href="/admin">Admin</a>
+      <a href="#" id="contact-link">Contact</a>
     </nav>
     <button class="ghost-button">Book a Demo</button>
   </header>
@@ -334,8 +341,23 @@
       <a href="#offer">Offer</a>
       <a href="#pricing">Pricing</a>
       <a href="#control">Control Panel</a>
+      <a href="contact" id="contact-footer">Contact</a>
     </div>
   </footer>
+
+  <div class="modal" id="contact-modal" aria-hidden="true">
+    <div class="modal-inner">
+      <button class="modal-close" id="contact-close">×</button>
+      <h2>Contact YoutuneAI</h2>
+      <form class="contact-form">
+        <label>Name<input type="text" placeholder="Your name" /></label>
+        <label>Email<input type="email" placeholder="you@example.com" /></label>
+        <label>Phone<input type="tel" placeholder="+1 555 123 4567" /></label>
+        <label>Message<textarea rows="4" placeholder="Tell us what you need"></textarea></label>
+        <button type="submit" class="primary">Send</button>
+      </form>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

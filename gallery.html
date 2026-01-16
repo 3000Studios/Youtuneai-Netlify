@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery - YoutuneAI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="bg-noise" aria-hidden="true"></div>
+  <div class="edge-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">YT</span>
+      <div class="brand-text">
+        <strong>YoutuneAI</strong>
+        <span>Gallery</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="livestream.html">Live Stream</a>
+      <a href="blog.html">Blog</a>
+      <a href="store.html">Store</a>
+      <a href="appstore.html">App Store</a>
+      <a href="referrals.html">Referrals</a>
+      <a href="projects.html">Current Projects</a>
+      <a href="/admin">Admin</a>
+    </nav>
+    <a class="ghost-button" href="#" id="contact-link">Contact</a>
+  </header>
+
+  <main class="page">
+    <section class="section">
+      <h1>Immersive Gallery</h1>
+      <p class="subhead">Showcasing AI, automation, and experience design. All assets are ready for replacement with your own media.</p>
+      <div class="logo-grid gallery-grid">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="AI concept" />
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Automation" />
+        <img src="https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?auto=format&fit=crop&w=800&q=80" alt="Teamwork" />
+        <img src="https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?auto=format&fit=crop&w=800&q=80" alt="System" />
+        <img src="https://images.unsplash.com/photo-1471357674240-e1a485acb3e1?auto=format&fit=crop&w=800&q=80" alt="Analytics" />
+        <img src="https://images.unsplash.com/photo-1471357674240-e1a485acb3e1?auto=format&fit=crop&w=800&q=80" alt="Vision" />
+        <img src="https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?auto=format&fit=crop&w=800&q=80" alt="Infra" />
+        <img src="https://images.unsplash.com/photo-1471357674240-e1a485acb3e1?auto=format&fit=crop&w=800&q=80" alt="Strategy" />
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="contact-modal" aria-hidden="true">
+    <div class="modal-inner">
+      <button class="modal-close" id="contact-close">×</button>
+      <h2>Contact YoutuneAI</h2>
+      <form class="contact-form">
+        <label>Name<input type="text" placeholder="Your name" /></label>
+        <label>Email<input type="email" placeholder="you@example.com" /></label>
+        <label>Phone<input type="tel" placeholder="+1 555 123 4567" /></label>
+        <label>Message<textarea rows="4" placeholder="Tell us what you need"></textarea></label>
+        <button type="submit" class="primary">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -14,6 +14,18 @@ const state = {
 const storageKey = 'youtuneai-state';
 const controlKey = 'youtuneai-control-unlocked';
 const controlPassword = '5555';
+const audioTracks = [
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
+];
 
 const elements = {
   eyebrow: document.getElementById('eyebrow'),
@@ -26,6 +38,11 @@ const elements = {
   metric3: document.getElementById('metric3'),
   testimonials: document.getElementById('testimonials'),
   transcript: document.getElementById('transcript'),
+  contactModal: document.getElementById('contact-modal'),
+  contactClose: document.getElementById('contact-close'),
+  contactLink: document.getElementById('contact-link'),
+  contactFooter: document.getElementById('contact-footer'),
+  cursorDot: document.getElementById('cursor-dot'),
   controlLock: document.getElementById('control-lock'),
   controlGrid: document.getElementById('control-grid'),
   controlPassword: document.getElementById('control-password'),
@@ -191,11 +208,47 @@ const setupReveal = () => {
   sections.forEach((section) => observer.observe(section));
 };
 
+const setupCursor = () => {
+  if (!elements.cursorDot) return;
+  window.addEventListener('pointermove', (e) => {
+    elements.cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+  });
+};
+
+const setupContactModal = () => {
+  const open = () => elements.contactModal?.classList.add('show');
+  const close = () => elements.contactModal?.classList.remove('show');
+  elements.contactLink?.addEventListener('click', (e) => { e.preventDefault(); open(); });
+  elements.contactFooter?.addEventListener('click', (e) => { e.preventDefault(); open(); });
+  elements.contactClose?.addEventListener('click', close);
+  elements.contactModal?.addEventListener('click', (e) => {
+    if (e.target === elements.contactModal) close();
+  });
+};
+
+const setupAudio = () => {
+  if (!audioTracks.length) return;
+  const audio = new Audio();
+  const pick = () => audioTracks[Math.floor(Math.random() * audioTracks.length)];
+  audio.src = pick();
+  audio.loop = true;
+  audio.volume = 0.15;
+  audio.autoplay = true;
+  audio.addEventListener('ended', () => {
+    audio.src = pick();
+    audio.play().catch(() => {});
+  });
+  audio.play().catch(() => {});
+};
+
 const init = () => {
   loadState();
   applyState();
   setupReveal();
   setControlVisibility();
+  setupCursor();
+  setupContactModal();
+  setupAudio();
 
   const recognition = setupVoice();
   const startButton = document.getElementById('start-voice');

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Stream - YoutuneAI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="bg-noise" aria-hidden="true"></div>
+  <div class="edge-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">YT</span>
+      <div class="brand-text">
+        <strong>YoutuneAI</strong>
+        <span>Live Stream</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="livestream.html">Live Stream</a>
+      <a href="blog.html">Blog</a>
+      <a href="store.html">Store</a>
+      <a href="appstore.html">App Store</a>
+      <a href="referrals.html">Referrals</a>
+      <a href="projects.html">Current Projects</a>
+      <a href="/admin">Admin</a>
+    </nav>
+    <a class="ghost-button" href="#" id="contact-link">Contact</a>
+  </header>
+
+  <main class="page">
+    <section class="section">
+      <h1>Live Stream</h1>
+      <p class="subhead">Public live stream view. Embed your stream URL or player here.</p>
+      <div class="hero-card">
+        <div class="card-top">
+          <span class="pill">On Air</span>
+          <span class="status">Streaming</span>
+        </div>
+        <div style="position: relative; padding-top: 56.25%; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Live" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="contact-modal" aria-hidden="true">
+    <div class="modal-inner">
+      <button class="modal-close" id="contact-close">×</button>
+      <h2>Contact YoutuneAI</h2>
+      <form class="contact-form">
+        <label>Name<input type="text" placeholder="Your name" /></label>
+        <label>Email<input type="email" placeholder="you@example.com" /></label>
+        <label>Phone<input type="tel" placeholder="+1 555 123 4567" /></label>
+        <label>Message<textarea rows="4" placeholder="Tell us what you need"></textarea></label>
+        <button type="submit" class="primary">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
