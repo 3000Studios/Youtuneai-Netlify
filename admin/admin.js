@@ -23,19 +23,11 @@ const setResponse = (payload) => {
   responseEl.textContent = JSON.stringify(payload, null, 2);
 };
 
-const getUserToken = async () => {
-  const user = window.netlifyIdentity?.currentUser();
-  if (!user) return null;
-  return user.jwt();
-};
-
 const callOrchestrator = async (payload) => {
-  const token = await getUserToken();
   const res = await fetch("/.netlify/functions/orchestrator", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     body: JSON.stringify(payload),
   });
@@ -47,25 +39,7 @@ const callOrchestrator = async (payload) => {
 };
 
 const initIdentity = () => {
-  if (!window.netlifyIdentity) {
-    setStatus("Netlify Identity not available.");
-    return;
-  }
-
-  window.netlifyIdentity.on("init", (user) => {
-    setStatus(user ? `Authenticated as ${user.email}` : "Not authenticated.");
-  });
-
-  window.netlifyIdentity.on("login", (user) => {
-    setStatus(`Authenticated as ${user.email}`);
-    window.netlifyIdentity.close();
-  });
-
-  window.netlifyIdentity.on("logout", () => {
-    setStatus("Not authenticated.");
-  });
-
-  window.netlifyIdentity.init();
+  setStatus("Cloudflare mode: use the access code to unlock controls.");
 };
 
 const setLockedUI = (locked) => {
@@ -121,13 +95,17 @@ const initSpeech = () => {
   };
 };
 
-loginBtn.addEventListener("click", () => {
-  window.netlifyIdentity?.open();
-});
+if (loginBtn) {
+  loginBtn.addEventListener("click", () => {
+    setStatus("Cloudflare mode active; login not required.");
+  });
+}
 
-logoutBtn.addEventListener("click", () => {
-  window.netlifyIdentity?.logout();
-});
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    setStatus("Cloudflare mode active; login not required.");
+  });
+}
 
 startBtn.addEventListener("click", () => {
   if (!recognition) return;

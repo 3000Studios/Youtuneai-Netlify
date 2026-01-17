@@ -1,0 +1,11 @@
+name = "youtuneai-netlify"
+main = "worker.js"
+compatibility_date = "2026-01-17"
+workers_dev = true
+
+# Serve the built site directly from Cloudflare (no origin) and keep the API path routed to the Worker.
+routes = ["youtuneai.com/*", "www.youtuneai.com/*"]
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
