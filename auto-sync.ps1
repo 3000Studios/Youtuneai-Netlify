@@ -2,12 +2,12 @@
 # Usage: ./auto-sync.ps1
 # Optional env vars:
 #   GIT_BRANCH     - branch to push to (default: main)
-#   SYNC_INTERVAL  - seconds between checks (default: 15)
+#   SYNC_INTERVAL  - seconds between checks (default: 1800)
 #   COMMIT_PREFIX  - commit message prefix (default: "auto: sync")
 
 param(
   [string]$Branch = $(if ($env:GIT_BRANCH) { $env:GIT_BRANCH } else { "main" }),
-  [int]$Interval = $(if ($env:SYNC_INTERVAL) { [int]$env:SYNC_INTERVAL } else { 15 }),
+  [int]$Interval = $(if ($env:SYNC_INTERVAL) { [int]$env:SYNC_INTERVAL } else { 1800 }),
   [string]$CommitPrefix = $(if ($env:COMMIT_PREFIX) { $env:COMMIT_PREFIX } else { "auto: sync" })
 )
 
@@ -31,7 +31,8 @@ while ($true) {
       git push origin $Branch
       Write-Host "Pushed: $message" -ForegroundColor Green
     }
-  } catch {
+  }
+  catch {
     Write-Host "Error during sync: $($_.Exception.Message)" -ForegroundColor Red
   }
   Start-Sleep -Seconds $Interval
