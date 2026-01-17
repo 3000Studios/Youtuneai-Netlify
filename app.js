@@ -67,6 +67,14 @@ const elements = {
   },
 };
 
+const setText = (el, value) => {
+  if (el) el.textContent = value;
+};
+
+const setInputValue = (el, value) => {
+  if (el) el.value = value;
+};
+
 const applyTheme = (theme) => {
   document.documentElement.dataset.theme = theme === 'ember' ? '' : theme;
 };
@@ -75,30 +83,32 @@ const isControlUnlocked = () => sessionStorage.getItem(controlKey) === 'true';
 
 const setControlVisibility = () => {
   const unlocked = isControlUnlocked();
-  elements.controlLock.style.display = unlocked ? 'none' : 'block';
-  elements.controlGrid.style.display = unlocked ? 'grid' : 'none';
+  if (elements.controlLock) elements.controlLock.style.display = unlocked ? 'none' : 'block';
+  if (elements.controlGrid) elements.controlGrid.style.display = unlocked ? 'grid' : 'none';
 };
 
 const applyState = () => {
-  elements.eyebrow.textContent = state.eyebrow;
-  elements.headline.textContent = state.headline;
-  elements.subhead.textContent = state.subhead;
-  elements.cta.textContent = state.cta;
-  elements.price.textContent = state.price;
-  elements.metric1.textContent = state.metric1;
-  elements.metric2.textContent = state.metric2;
-  elements.metric3.textContent = state.metric3;
-  elements.testimonials.style.display = state.testimonialsVisible ? 'grid' : 'none';
+  setText(elements.eyebrow, state.eyebrow);
+  setText(elements.headline, state.headline);
+  setText(elements.subhead, state.subhead);
+  setText(elements.cta, state.cta);
+  setText(elements.price, state.price);
+  setText(elements.metric1, state.metric1);
+  setText(elements.metric2, state.metric2);
+  setText(elements.metric3, state.metric3);
+  if (elements.testimonials) {
+    elements.testimonials.style.display = state.testimonialsVisible ? 'grid' : 'none';
+  }
   applyTheme(state.theme);
 
-  elements.inputs.headline.value = state.headline;
-  elements.inputs.subhead.value = state.subhead;
-  elements.inputs.cta.value = state.cta;
-  elements.inputs.price.value = state.price;
-  elements.inputs.theme.value = state.theme;
-  elements.inputs.metric1.value = state.metric1;
-  elements.inputs.metric2.value = state.metric2;
-  elements.inputs.metric3.value = state.metric3;
+  setInputValue(elements.inputs.headline, state.headline);
+  setInputValue(elements.inputs.subhead, state.subhead);
+  setInputValue(elements.inputs.cta, state.cta);
+  setInputValue(elements.inputs.price, state.price);
+  setInputValue(elements.inputs.theme, state.theme);
+  setInputValue(elements.inputs.metric1, state.metric1);
+  setInputValue(elements.inputs.metric2, state.metric2);
+  setInputValue(elements.inputs.metric3, state.metric3);
 };
 
 const persistState = () => {
@@ -116,26 +126,29 @@ const loadState = () => {
   }
 };
 
-const updateFromInputs = () => {
-  state.headline = elements.inputs.headline.value.trim() || state.headline;
-  state.subhead = elements.inputs.subhead.value.trim() || state.subhead;
-  state.cta = elements.inputs.cta.value.trim() || state.cta;
-  state.price = elements.inputs.price.value.trim() || state.price;
-  state.theme = elements.inputs.theme.value;
-  state.metric1 = elements.inputs.metric1.value.trim() || state.metric1;
-  state.metric2 = elements.inputs.metric2.value.trim() || state.metric2;
-  state.metric3 = elements.inputs.metric3.value.trim() || state.metric3;
+const setValue = (key, value) => {
+  if (!value) return;
+  state[key] = value.trim();
   applyState();
   persistState();
 };
 
 const logTranscript = (text) => {
-  elements.transcript.textContent = text;
+  if (elements.transcript) {
+    elements.transcript.textContent = text;
+  }
 };
 
-const setValue = (key, value) => {
-  if (!value) return;
-  state[key] = value.trim();
+const updateFromInputs = () => {
+  const read = (input, fallback) => (input ? input.value.trim() || fallback : fallback);
+  state.headline = read(elements.inputs.headline, state.headline);
+  state.subhead = read(elements.inputs.subhead, state.subhead);
+  state.cta = read(elements.inputs.cta, state.cta);
+  state.price = read(elements.inputs.price, state.price);
+  state.theme = elements.inputs.theme?.value || state.theme;
+  state.metric1 = read(elements.inputs.metric1, state.metric1);
+  state.metric2 = read(elements.inputs.metric2, state.metric2);
+  state.metric3 = read(elements.inputs.metric3, state.metric3);
   applyState();
   persistState();
 };
@@ -257,7 +270,7 @@ const setupTicker = () => {
       const res = await fetch(url);
       const data = await res.json();
       const items = Object.entries(data).map(([k, v]) => `${k.toUpperCase()}: $${(v.usd || 0).toLocaleString()}`);
-      elements.tickerData.textContent = items.join('   •   ');
+      elements.tickerData.textContent = items.join('   |   ');
     } catch (e) {
       elements.tickerData.textContent = 'Live market data unavailable';
     }
@@ -327,31 +340,37 @@ const init = () => {
   const stopButton = document.getElementById('stop-voice');
   const applyButton = document.getElementById('apply');
 
-  startButton.addEventListener('click', () => {
-    if (!recognition) return;
-    recognition.start();
-    logTranscript('Listening...');
-  });
+  if (startButton && recognition) {
+    startButton.addEventListener('click', () => {
+      recognition.start();
+      logTranscript('Listening...');
+    });
+  }
 
-  stopButton.addEventListener('click', () => {
-    if (!recognition) return;
-    recognition.stop();
-    logTranscript('Stopped.');
-  });
+  if (stopButton && recognition) {
+    stopButton.addEventListener('click', () => {
+      recognition.stop();
+      logTranscript('Stopped.');
+    });
+  }
 
-  applyButton.addEventListener('click', updateFromInputs);
+  if (applyButton) {
+    applyButton.addEventListener('click', updateFromInputs);
+  }
 
-  elements.controlUnlock.addEventListener('click', () => {
-    const value = elements.controlPassword.value.trim();
-    if (value === controlPassword) {
-      sessionStorage.setItem(controlKey, 'true');
-      elements.controlPassword.value = '';
-      elements.controlNote.textContent = '';
-      setControlVisibility();
-      return;
-    }
-    elements.controlNote.textContent = 'Incorrect access code.';
-  });
+  if (elements.controlUnlock && elements.controlPassword && elements.controlNote) {
+    elements.controlUnlock.addEventListener('click', () => {
+      const value = elements.controlPassword.value.trim();
+      if (value === controlPassword) {
+        sessionStorage.setItem(controlKey, 'true');
+        elements.controlPassword.value = '';
+        elements.controlNote.textContent = '';
+        setControlVisibility();
+        return;
+      }
+      elements.controlNote.textContent = 'Incorrect access code.';
+    });
+  }
 };
 
 init();
