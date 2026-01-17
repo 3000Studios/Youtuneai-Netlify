@@ -3,88 +3,57 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Referrals - YoutuneAI</title>
+  <title>YoutuneAI Referrals</title>
+  <meta name="description" content="Referrals - YoutuneAI" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="referrals">
   <div class="video-bg" aria-hidden="true">
-    <video src="https://cdn.coverr.co/videos/coverr-glass-towers-1518/1080p.mp4" autoplay muted loop playsinline></video>
+    <video src="https://cdn.coverr.co/videos/coverr-dreamy-clouds-4713/1080p.mp4" autoplay muted loop playsinline></video>
   </div>
-  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-  <div class="bg-noise" aria-hidden="true"></div>
   <div class="edge-glow" aria-hidden="true"></div>
+  <div class="edge-frame" aria-hidden="true"></div>
   <header class="site-header">
+    <div class="nav-video">
+      <video src="https://cdn.coverr.co/videos/coverr-glass-building-reflections-6827/1080p.mp4" autoplay muted loop playsinline></video>
+    </div>
     <div class="brand">
       <span class="brand-mark">YT</span>
       <div class="brand-text">
         <strong>YoutuneAI</strong>
-        <span>Referrals</span>
+        <span>Revenue Engine</span>
       </div>
     </div>
-    <button class="menu-toggle" id="menu-toggle">Menu</button>
     <nav class="nav">
       <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="livestream.html">Live Stream</a>
-      <a href="blog.html">Blog</a>
       <a href="store.html">Store</a>
       <a href="appstore.html">App Store</a>
+      <a href="blog.html">Blog</a>
+      <a href="livestream.html">Live Stream</a>
+      <a href="gamezone.html">Game Zone</a>
       <a href="referrals.html">Referrals</a>
-      <a href="projects.html">Current Projects</a>
+      <a href="projects.html">Projects</a>
+      <a href="studio3000.html">3000 Studios</a>
       <a href="/admin">Admin</a>
+      <a href="#">Contact</a>
     </nav>
-    <div class="mobile-drawer" id="mobile-drawer">
-      <video src="https://cdn.coverr.co/videos/coverr-glass-towers-1518/1080p.mp4" autoplay muted loop playsinline></video>
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="livestream.html">Live Stream</a>
-      <a href="blog.html">Blog</a>
-      <a href="store.html">Store</a>
-      <a href="appstore.html">App Store</a>
-      <a href="referrals.html">Referrals</a>
-      <a href="projects.html">Current Projects</a>
-      <a href="/admin">Admin</a>
-      <a href="#" id="contact-link-mobile">Contact</a>
-    </div>
-    <a class="ghost-button" href="#" id="contact-link">Contact</a>
   </header>
 
   <main class="page">
     <section class="section">
-      <h1>Referral Program</h1>
-      <p class="subhead">Invite partners, track rewards, and issue codes.</p>
-      <div class="adsense-slot">AdSense slot</div>
+      <h2>Referral hub</h2>
+      <p class="subhead">Share and manage referral codes. Community-ready.</p>
       <div class="grid">
         <article class="feature-card">
-          <h3>Invite links</h3>
-          <p>Generate and share referral URLs.</p>
+          <h3>Your code</h3>
+          <p>Sign in to get a personal referral link.</p>
         </article>
         <article class="feature-card">
-          <h3>Rewards</h3>
-          <p>Configure payouts and perks.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Analytics</h3>
-          <p>Monitor performance of each partner.</p>
+          <h3>Community board</h3>
+          <p>Swap referral codes and track conversions.</p>
         </article>
       </div>
     </section>
   </main>
-
-  <div class="modal" id="contact-modal" aria-hidden="true">
-    <div class="modal-inner">
-      <button class="modal-close" id="contact-close">×</button>
-      <h2>Contact YoutuneAI</h2>
-      <form class="contact-form">
-        <label>Name<input type="text" placeholder="Your name" /></label>
-        <label>Email<input type="email" placeholder="you@example.com" /></label>
-        <label>Phone<input type="tel" placeholder="+1 555 123 4567" /></label>
-        <label>Message<textarea rows="4" placeholder="Tell us what you need"></textarea></label>
-        <button type="submit" class="primary">Send</button>
-      </form>
-    </div>
-  </div>
-
-  <script type="module" src="app.js"></script>
 </body>
 </html>

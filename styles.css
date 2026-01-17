@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap");
 
 @font-face {
   font-family: "Diamond Sparkling";
@@ -9,16 +9,19 @@
 
 :root {
   color-scheme: dark;
-  --bg: #0d0f14;
-  --bg-alt: #12151c;
-  --surface: #151922;
-  --surface-2: #1b212c;
-  --text: #f7f4ee;
-  --muted: #c7d0db;
-  --accent: #f2c46d;
-  --accent-2: #e3f3ff;
+  --bg: #0a0b10;
+  --bg-alt: #0f1118;
+  --surface: #121621;
+  --surface-2: #161c29;
+  --text: #f5f2ec;
+  --muted: #c9d1da;
+  --accent: #f5d97f;
+  --accent-2: #c8e1ff;
+  --platinum: #d9dee7;
+  --gold-grad: linear-gradient(135deg, #f5d97f, #b68728);
+  --blue-grad: linear-gradient(135deg, #0f1f3a, #102a5c);
   --shadow: rgba(0, 0, 0, 0.45);
-  --ring: rgba(242, 196, 109, 0.35);
+  --ring: rgba(245, 217, 127, 0.35);
 }
 
 [data-theme="ocean"] {
@@ -46,6 +49,7 @@
 body {
   margin: 0;
   font-family: "Diamond Sparkling", "Manrope", "Segoe UI", sans-serif;
+  scroll-behavior: smooth;
   background:
     radial-gradient(
       circle at 20% 10%,
@@ -86,6 +90,19 @@ body {
   z-index: 2;
 }
 
+.edge-frame {
+  position: fixed;
+  inset: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  pointer-events: none;
+  box-shadow:
+    0 0 24px rgba(245, 217, 127, 0.3),
+    inset 0 0 26px rgba(255, 255, 255, 0.08);
+  animation: perimeter 8s linear infinite;
+  z-index: 1;
+}
+
 .cursor-dot {
   position: fixed;
   width: 18px;
@@ -118,6 +135,34 @@ body {
   height: 100%;
   object-fit: cover;
   filter: saturate(1.1) contrast(1.1);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 6vw;
+  backdrop-filter: blur(18px);
+  background: rgba(10, 11, 14, 0.45);
+  z-index: 10;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.nav-video {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.45;
+}
+
+.nav-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.05) blur(1px);
 }
 
 .bg-orb {
@@ -280,7 +325,7 @@ body {
 }
 
 .primary {
-  background: linear-gradient(140deg, var(--accent), var(--accent-2));
+  background: var(--gold-grad);
   color: #0a0a0a;
   box-shadow: 0 16px 35px var(--ring);
   font-weight: 600;
@@ -316,10 +361,11 @@ body {
 }
 
 .hero-copy h1 {
-  font-family: "Syne", "Segoe UI", sans-serif;
+  font-family: "Playfair Display", "Syne", "Segoe UI", sans-serif;
   font-size: clamp(2.8rem, 4.5vw, 4.8rem);
   margin: 0 0 1rem;
   letter-spacing: -0.02em;
+  animation: skate-in 0.8s ease forwards, pulse-color 6s ease-in-out infinite;
 }
 
 .eyebrow {
@@ -500,7 +546,7 @@ body {
 }
 
 .section h2 {
-  font-family: "Syne", "Segoe UI", sans-serif;
+  font-family: "Playfair Display", "Syne", "Segoe UI", sans-serif;
   font-size: clamp(2rem, 3vw, 3.1rem);
   margin-bottom: 1rem;
 }
@@ -946,6 +992,32 @@ body {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes skate-in {
+  from {
+    transform: translateX(-40px) skewX(-6deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) skewX(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-color {
+  0% {
+    color: var(--text);
+  }
+  33% {
+    color: #7ad0ff;
+  }
+  66% {
+    color: #7ff5c2;
+  }
+  100% {
+    color: var(--text);
   }
 }
 

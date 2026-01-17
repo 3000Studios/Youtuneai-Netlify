@@ -3,92 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog - YoutuneAI</title>
+  <title>YoutuneAI Blog</title>
+  <meta name="description" content="Blog - YoutuneAI" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="blog">
   <div class="video-bg" aria-hidden="true">
-    <video src="https://cdn.coverr.co/videos/coverr-futuristic-city-2039/1080p.mp4" autoplay muted loop playsinline></video>
+    <video src="https://cdn.coverr.co/videos/coverr-blue-ice-6547/1080p.mp4" autoplay muted loop playsinline></video>
   </div>
-  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-  <div class="bg-noise" aria-hidden="true"></div>
   <div class="edge-glow" aria-hidden="true"></div>
+  <div class="edge-frame" aria-hidden="true"></div>
   <header class="site-header">
+    <div class="nav-video">
+      <video src="https://cdn.coverr.co/videos/coverr-glass-building-reflections-6827/1080p.mp4" autoplay muted loop playsinline></video>
+    </div>
     <div class="brand">
       <span class="brand-mark">YT</span>
       <div class="brand-text">
         <strong>YoutuneAI</strong>
-        <span>Blog</span>
+        <span>Revenue Engine</span>
       </div>
     </div>
-    <button class="menu-toggle" id="menu-toggle">Menu</button>
     <nav class="nav">
       <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="livestream.html">Live Stream</a>
-      <a href="blog.html">Blog</a>
       <a href="store.html">Store</a>
       <a href="appstore.html">App Store</a>
+      <a href="blog.html">Blog</a>
+      <a href="livestream.html">Live Stream</a>
+      <a href="gamezone.html">Game Zone</a>
       <a href="referrals.html">Referrals</a>
-      <a href="projects.html">Current Projects</a>
+      <a href="projects.html">Projects</a>
+      <a href="studio3000.html">3000 Studios</a>
       <a href="/admin">Admin</a>
+      <a href="#">Contact</a>
     </nav>
-    <div class="mobile-drawer" id="mobile-drawer">
-      <video src="https://cdn.coverr.co/videos/coverr-futuristic-city-2039/1080p.mp4" autoplay muted loop playsinline></video>
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="livestream.html">Live Stream</a>
-      <a href="blog.html">Blog</a>
-      <a href="store.html">Store</a>
-      <a href="appstore.html">App Store</a>
-      <a href="referrals.html">Referrals</a>
-      <a href="projects.html">Current Projects</a>
-      <a href="/admin">Admin</a>
-      <a href="#" id="contact-link-mobile">Contact</a>
-    </div>
-    <a class="ghost-button" href="#" id="contact-link">Contact</a>
   </header>
 
   <main class="page">
     <section class="section">
-      <h1>Insights & Automation</h1>
-      <p class="subhead">Auto-populated articles will live here. Add your feed or CMS endpoint.</p>
-      <div class="adsense-slot">AdSense slot</div>
+      <h2>Latest stories</h2>
+      <p class="subhead">High-SEO, long-form updates on AI, automation, and monetization.</p>
       <div class="grid">
         <article class="feature-card">
-          <h3>AI pipelines that adapt</h3>
-          <p>How adaptive flows reduce friction and lift conversions across the funnel.</p>
+          <h3>AI funnels, continuously learning</h3>
+          <p>How to pair experimentation with revenue telemetry.</p>
         </article>
         <article class="feature-card">
-          <h3>Voice-first editing</h3>
-          <p>Command your site with speech, commit to GitHub, deploy via Netlify.</p>
+          <h3>Voice-to-deploy workflows</h3>
+          <p>Turning spoken prompts into live, production changes.</p>
         </article>
         <article class="feature-card">
-          <h3>Automation safety rails</h3>
-          <p>Rollback, previews, and guardrails that keep experiments safe.</p>
+          <h3>Experiment velocity</h3>
+          <p>Run safer, faster tests without stalling conversions.</p>
         </article>
       </div>
     </section>
   </main>
-
-  <div class="ticker" id="ticker" aria-live="polite">
-    <span id="ticker-data">Loading markets...</span>
-  </div>
-
-  <div class="modal" id="contact-modal" aria-hidden="true">
-    <div class="modal-inner">
-      <button class="modal-close" id="contact-close">×</button>
-      <h2>Contact YoutuneAI</h2>
-      <form class="contact-form">
-        <label>Name<input type="text" placeholder="Your name" /></label>
-        <label>Email<input type="email" placeholder="you@example.com" /></label>
-        <label>Phone<input type="tel" placeholder="+1 555 123 4567" /></label>
-        <label>Message<textarea rows="4" placeholder="Tell us what you need"></textarea></label>
-        <button type="submit" class="primary">Send</button>
-      </form>
-    </div>
-  </div>
-
-  <script type="module" src="app.js"></script>
 </body>
 </html>

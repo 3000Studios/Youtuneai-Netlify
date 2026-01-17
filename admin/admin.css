@@ -27,6 +27,74 @@ body {
   min-height: 100vh;
 }
 
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 6vw;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.sub-nav {
+  display: flex;
+  gap: 1rem;
+  padding: 0.6rem 6vw;
+  background: rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 64px;
+  z-index: 29;
+}
+
+.sub-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.brand {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(140deg, var(--accent), var(--accent-2));
+  color: #0a0a0a;
+  font-weight: 700;
+}
+
+.brand-text strong {
+  display: block;
+}
+
+.brand-text span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
 .admin-shell {
   padding: 3rem 6vw 4rem;
 }
@@ -99,6 +167,54 @@ body {
 
 .card.wide {
   grid-column: 1 / -1;
+}
+
+.preview-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.preview-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.preview-stage {
+  background: radial-gradient(circle at 20% 20%, rgba(241, 179, 90, 0.12), transparent 55%), var(--surface-2);
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.preview-stage.hover-spin:hover {
+  transform: rotate(-0.3deg) scale(1.01);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.preview-hero {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.preview-hero h3 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.preview-hero p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.preview-cta-row {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
 }
 
 .pill-row {
@@ -179,5 +295,10 @@ pre {
   .admin-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .sub-nav {
+    top: 58px;
+    flex-wrap: wrap;
   }
 }

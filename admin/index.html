@@ -8,6 +8,28 @@
   <link rel="stylesheet" href="./admin.css" />
 </head>
 <body>
+  <header class="site-nav">
+    <div class="brand">
+      <span class="brand-mark">YT</span>
+      <div class="brand-text">
+        <strong>YoutuneAI</strong>
+        <span>Revenue Engine</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="/index.html">Home</a>
+      <a href="/admin">Admin</a>
+      <a href="#" id="nav-contact">Contact</a>
+    </nav>
+  </header>
+
+  <nav class="sub-nav">
+    <a href="#status-card">Status</a>
+    <a href="#command-card">Command</a>
+    <a href="#response-card">Responses</a>
+    <a href="#preview-card">Live Preview</a>
+  </nav>
+
   <div class="lock-screen" id="lock-screen">
     <div class="lock-card">
       <h2>Enter access code</h2>
@@ -32,7 +54,7 @@
     </header>
 
     <main class="admin-grid">
-      <section class="card">
+      <section class="card" id="status-card">
         <h2>Status</h2>
         <p id="status">Checking authentication...</p>
         <div class="pill-row">
@@ -46,25 +68,48 @@
         <p class="muted" id="mic-state">Microphone idle.</p>
       </section>
 
-      <section class="card">
+      <section class="card" id="command-card">
         <h2>Command</h2>
         <textarea id="command" rows="6" placeholder="Speak or type a command..."></textarea>
         <div class="button-row">
           <button id="plan" class="primary">Generate Plan</button>
-          <button id="apply" class="secondary">Approve & Create PR</button>
+          <button id="apply" class="secondary">Apply Live</button>
         </div>
         <p class="muted">Example: "Update the headline to Boost pipeline velocity" or "Create a new page for /partners".</p>
       </section>
 
-      <section class="card wide">
+      <section class="card wide" id="response-card">
         <h2>Response</h2>
         <pre id="response">{}</pre>
         <div class="button-row">
-          <button id="rollback" class="ghost">Rollback Last Commit (PR)</button>
+          <button id="rollback" class="ghost">Rollback (disabled)</button>
         </div>
-        <p class="muted">PRs are opened for review; say "Approve deploy" after reviewing on GitHub.</p>
+        <p class="muted">Live applies go straight to production branch.</p>
       </section>
 
+      <section class="card wide" id="preview-card">
+        <h2>Live Preview</h2>
+        <div class="preview-shell">
+          <div class="preview-controls">
+            <p class="muted">Local preview only — updates instantly from your commands.</p>
+            <div class="button-row">
+              <button id="preview-reset" class="ghost">Reset Preview</button>
+              <button id="preview-speak" class="secondary">Play Summary</button>
+            </div>
+          </div>
+          <div class="preview-stage" id="preview-stage">
+            <div class="preview-hero" id="preview-hero">
+              <p class="eyebrow" id="preview-eyebrow">AI-Driven Growth Stack</p>
+              <h3 id="preview-headline">Build a revenue engine that learns every visit.</h3>
+              <p id="preview-subhead">Adaptive messaging, live experiments, and telemetry built in.</p>
+              <div class="preview-cta-row">
+                <button class="primary" id="preview-cta">Start the Revenue Pilot</button>
+                <button class="secondary">See the System</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 

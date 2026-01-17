@@ -9,11 +9,40 @@ const stopBtn = document.getElementById("stop");
 const planBtn = document.getElementById("plan");
 const applyBtn = document.getElementById("apply");
 const rollbackBtn = document.getElementById("rollback");
+const lockScreen = document.getElementById("lock-screen");
+const lockInput = document.getElementById("lock-input");
+const lockButton = document.getElementById("lock-button");
+const lockError = document.getElementById("lock-error");
+const adminShell = document.querySelector(".admin-shell");
+const previewStage = document.getElementById("preview-stage");
+const previewHeadline = document.getElementById("preview-headline");
+const previewSubhead = document.getElementById("preview-subhead");
+const previewEyebrow = document.getElementById("preview-eyebrow");
+const previewCta = document.getElementById("preview-cta");
+const previewReset = document.getElementById("preview-reset");
+const previewSpeak = document.getElementById("preview-speak");
 
 let recognition;
 let lastPlan = null;
 const PASSCODE = "5555";
 const UNLOCK_KEY = "yt-admin-unlocked";
+const positiveWords = ["apply now", "ship it", "go ahead", "do it", "yes", "confirm", "send it"];
+
+const colors = new Set([
+  "red",
+  "blue",
+  "green",
+  "yellow",
+  "purple",
+  "orange",
+  "pink",
+  "teal",
+  "cyan",
+  "white",
+  "black",
+  "gray",
+  "grey",
+]);
 
 const setStatus = (text) => {
   statusEl.textContent = text;
@@ -21,6 +50,72 @@ const setStatus = (text) => {
 
 const setResponse = (payload) => {
   responseEl.textContent = JSON.stringify(payload, null, 2);
+};
+
+const speak = (text) => {
+  if (!("speechSynthesis" in window)) return;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 1;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+};
+
+const resetPreview = () => {
+  if (!previewStage) return;
+  previewEyebrow.textContent = "AI-Driven Growth Stack";
+  previewHeadline.textContent = "Build a revenue engine that learns every visit.";
+  previewSubhead.textContent = "Adaptive messaging, live experiments, and telemetry built in.";
+  previewCta.textContent = "Start the Revenue Pilot";
+  previewStage.style.background = "";
+  previewHeadline.style.color = "";
+  previewHeadline.style.borderRadius = "";
+  previewStage.classList.remove("hover-spin");
+};
+
+const applyLocalPreview = (command) => {
+  if (!command || !previewStage) return;
+  const text = command.toLowerCase();
+
+  // headline changes
+  if (text.includes("headline") || text.includes("top text")) {
+    previewHeadline.textContent = command;
+  }
+
+  // subhead changes
+  if (text.includes("subhead") || text.includes("subtitle")) {
+    previewSubhead.textContent = command;
+  }
+
+  // CTA changes
+  if (text.includes("cta") || text.includes("button")) {
+    previewCta.textContent = command;
+  }
+
+  // colors
+  colors.forEach((c) => {
+    if (text.includes(c)) {
+      previewHeadline.style.color = c;
+      previewCta.style.background = c;
+    }
+  });
+
+  // circles / rounded
+  if (text.includes("circle")) {
+    previewHeadline.style.borderRadius = "50px";
+    previewCta.style.borderRadius = "999px";
+  }
+
+  // hover effects
+  if (text.includes("hover")) {
+    previewStage.classList.add("hover-spin");
+  }
+
+  // background hue
+  if (text.includes("blue")) {
+    previewStage.style.background = "linear-gradient(135deg, rgba(80,120,255,0.15), rgba(20,30,60,0.6))";
+  }
+
+  speak("Preview updated");
 };
 
 const callOrchestrator = async (payload) => {
@@ -59,9 +154,11 @@ const initPasscodeGate = () => {
       sessionStorage.setItem(UNLOCK_KEY, "true");
       lockError.textContent = "";
       setLockedUI(false);
+      speak("Controls unlocked");
       return;
     }
     lockError.textContent = "Incorrect code.";
+    speak("Incorrect code");
   };
 
   lockButton.addEventListener("click", unlock);
@@ -88,6 +185,11 @@ const initSpeech = () => {
     const transcript = last[0].transcript.trim();
     commandEl.value = transcript;
     micStateEl.textContent = `Captured: "${transcript}"`;
+
+    const lower = transcript.toLowerCase();
+    if (positiveWords.some((p) => lower.includes(p)) && lastPlan) {
+      applyBtn.click();
+    }
   };
 
   recognition.onerror = (event) => {
@@ -124,43 +226,60 @@ planBtn.addEventListener("click", async () => {
     const command = commandEl.value.trim();
     if (!command) return;
     setResponse({ status: "Planning..." });
+    applyLocalPreview(command);
     const data = await callOrchestrator({ mode: "plan", command });
     lastPlan = data;
     setResponse(data);
+    speak("Plan ready. Say apply now to ship it.");
   } catch (err) {
     setResponse({ error: err.message });
+    speak("Planning failed");
   }
 });
 
 applyBtn.addEventListener("click", async () => {
   try {
     if (!lastPlan) {
-      setResponse({ error: "Generate a plan first." });
-      return;
+      // If no plan yet, run a quick plan with the current command value.
+      const fallbackCommand = commandEl.value.trim();
+      if (!fallbackCommand) {
+        setResponse({ error: "Provide a command first." });
+        return;
+      }
+      const data = await callOrchestrator({ mode: "plan", command: fallbackCommand });
+      lastPlan = data;
     }
-    setResponse({ status: "Creating PR..." });
+    setResponse({ status: "Applying live to production..." });
     const data = await callOrchestrator({ mode: "apply", plan: lastPlan.plan, command: lastPlan.command });
     setResponse(data);
+    speak("Applied live");
   } catch (err) {
     setResponse({ error: err.message });
+    speak("Apply failed");
   }
 });
 
 rollbackBtn.addEventListener("click", async () => {
   try {
-    setResponse({ status: "Creating rollback PR..." });
-    const data = await callOrchestrator({ mode: "rollback" });
-    setResponse(data);
+    setResponse({ status: "Rollback disabled in live mode." });
+    speak("Rollback disabled");
   } catch (err) {
     setResponse({ error: err.message });
+    speak("Rollback failed");
   }
 });
 
 initIdentity();
 initPasscodeGate();
 initSpeech();
-const lockScreen = document.getElementById("lock-screen");
-const lockInput = document.getElementById("lock-input");
-const lockButton = document.getElementById("lock-button");
-const lockError = document.getElementById("lock-error");
-const adminShell = document.querySelector(".admin-shell");
+
+if (previewReset) {
+  previewReset.addEventListener("click", () => resetPreview());
+}
+
+if (previewSpeak) {
+  previewSpeak.addEventListener("click", () => {
+    const summary = `${previewHeadline.textContent}. ${previewSubhead.textContent}. Call to action: ${previewCta.textContent}`;
+    speak(summary);
+  });
+}

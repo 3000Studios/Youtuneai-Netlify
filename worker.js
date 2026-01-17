@@ -52,8 +52,21 @@ export default {
       return addSecurityHeaders(res);
     }
 
-    // Default: serve the built static assets from ./dist.
-    const res = await env.ASSETS.fetch(request);
-    return addSecurityHeaders(res);
+    // Default: serve the built static assets from ./dist with optional placeholder injection.
+    const assetRes = await env.ASSETS.fetch(request);
+    const contentType = assetRes.headers.get("Content-Type") || "";
+    if (contentType.includes("text/html")) {
+      const text = await assetRes.text();
+      const injected = text
+        .replace(/__PAYPAL_CLIENT_ID__/g, env.PAYPAL_CLIENT_ID_PROD || "")
+        .replace(/__ADSENSE_PUBLISHER__/g, env.ADSENSE_PUBLISHER || "");
+      return addSecurityHeaders(
+        new Response(injected, {
+          status: assetRes.status,
+          headers: assetRes.headers,
+        })
+      );
+    }
+    return addSecurityHeaders(assetRes);
   },
 };
