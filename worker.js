@@ -23,20 +23,6 @@ export default {
     const url = new URL(request.url);
     const cleanPath = url.pathname.replace(/\/$/, "");
 
-    const retiredPaths = new Set([
-      "/gallery",
-      "/livestream",
-      "/blog",
-      "/store",
-      "/appstore",
-      "/referrals",
-      "/projects",
-    ]);
-
-    if (retiredPaths.has(cleanPath)) {
-      return addSecurityHeaders(Response.redirect(`${url.origin}/`, 301));
-    }
-
     if (url.pathname === "/.netlify/functions/orchestrator") {
       if (request.method !== "POST") {
         return jsonResponse(405, { error: "Method not allowed." });

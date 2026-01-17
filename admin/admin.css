@@ -217,6 +217,19 @@ body {
   margin-top: 0.4rem;
 }
 
+.preview-extras {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.preview-extra-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.8rem;
+}
+
 .pill-row {
   display: flex;
   gap: 0.75rem;

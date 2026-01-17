@@ -20,6 +20,9 @@ Write-Host "Auto-sync watching branch '$Branch' every $Interval seconds. Press C
 
 while ($true) {
   try {
+    # Always pull latest changes first to avoid conflicts
+    git pull origin $Branch
+
     if (Has-GitChanges) {
       $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
       $message = "$CommitPrefix - $timestamp"

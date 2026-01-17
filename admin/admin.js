@@ -21,6 +21,7 @@ const previewEyebrow = document.getElementById("preview-eyebrow");
 const previewCta = document.getElementById("preview-cta");
 const previewReset = document.getElementById("preview-reset");
 const previewSpeak = document.getElementById("preview-speak");
+const previewExtras = document.getElementById("preview-extras");
 
 let recognition;
 let lastPlan = null;
@@ -114,7 +115,83 @@ const applyLocalPreview = (command) => {
   if (text.includes("blue")) {
     previewStage.style.background = "linear-gradient(135deg, rgba(80,120,255,0.15), rgba(20,30,60,0.6))";
   }
+};
 
+const clearExtras = () => {
+  if (previewExtras) previewExtras.innerHTML = "";
+};
+
+const applyActionsPreview = (actions = []) => {
+  clearExtras();
+  actions.forEach((action) => {
+    if (action.type === "update_copy") {
+      if (action.field === "headline") previewHeadline.textContent = action.value;
+      if (action.field === "subhead") previewSubhead.textContent = action.value;
+      if (action.field === "cta") previewCta.textContent = action.value;
+    }
+    if (action.type === "update_meta" && action.title) {
+      previewEyebrow.textContent = action.title;
+    }
+    if (action.type === "update_theme") {
+      previewStage.dataset.theme = action.theme;
+    }
+    if (action.type === "update_background_video") {
+      previewStage.style.background = `linear-gradient(135deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url('${action.src}') center/cover`;
+    }
+    if (action.type === "update_wallpaper") {
+      previewStage.style.background = `url('${action.src}') center/cover`;
+    }
+    if (action.type === "update_avatar") {
+      if (previewExtras) {
+        const img = document.createElement("img");
+        img.src = action.src;
+        img.alt = "Avatar";
+        img.style.width = "120px";
+        img.style.borderRadius = "16px";
+        previewExtras.appendChild(img);
+      }
+    }
+    if (action.type === "insert_section") {
+      if (previewExtras) {
+        const block = document.createElement("div");
+        block.className = "preview-extra-card";
+        block.innerHTML = `<h4>${action.title || action.id || "Section"}</h4><p>${action.body || ""}</p>`;
+        previewExtras.appendChild(block);
+      }
+    }
+    if (action.type === "insert_video") {
+      if (previewExtras) {
+        const block = document.createElement("div");
+        block.className = "preview-extra-card";
+        block.innerHTML = `<h4>${action.title || "Video"}</h4><video controls muted playsinline style="width:100%;border-radius:12px;"><source src="${action.src}" type="video/mp4"></video>`;
+        previewExtras.appendChild(block);
+      }
+    }
+    if (action.type === "insert_stream") {
+      if (previewExtras) {
+        const block = document.createElement("div");
+        block.className = "preview-extra-card";
+        block.innerHTML = `<h4>${action.title || "Livestream"}</h4><div class="embed"><iframe src="${action.url}" style="width:100%;height:200px;border:0;border-radius:12px;" allowfullscreen></iframe></div>`;
+        previewExtras.appendChild(block);
+      }
+    }
+    if (action.type === "add_product") {
+      if (previewExtras) {
+        const block = document.createElement("div");
+        block.className = "preview-extra-card";
+        block.innerHTML = `<h4>${action.name || "Product"}</h4><p>${action.description || ""}</p><strong>${action.price || ""}</strong>`;
+        previewExtras.appendChild(block);
+      }
+    }
+    if (action.type === "insert_monetization") {
+      if (previewExtras) {
+        const block = document.createElement("div");
+        block.className = "preview-extra-card";
+        block.innerHTML = `<h4>${action.headline || "Monetize"}</h4><p>${action.description || ""}</p><button class="primary">${action.cta || "Get the offer"}</button>`;
+        previewExtras.appendChild(block);
+      }
+    }
+  });
   speak("Preview updated");
 };
 
@@ -230,6 +307,9 @@ planBtn.addEventListener("click", async () => {
     const data = await callOrchestrator({ mode: "plan", command });
     lastPlan = data;
     setResponse(data);
+    if (data.plan?.actions) {
+      applyActionsPreview(data.plan.actions);
+    }
     speak("Plan ready. Say apply now to ship it.");
   } catch (err) {
     setResponse({ error: err.message });
