@@ -436,9 +436,15 @@ Only include supported actions. Keep values concise and suitable for production.
           temperature: 0.2,
         }),
       });
-      const data = await res.json();
+      const raw = await res.text();
+      if (!res.ok) {
+        throw new Error(`OpenAI error ${res.status}: ${raw}`);
+      }
+      const data = JSON.parse(raw);
       const content = data?.choices?.[0]?.message?.content;
-      if (!content) throw new Error("No response from model.");
+      if (!content) {
+        throw new Error(`OpenAI response missing content: ${raw}`);
+      }
       plan = extractJson(content);
     }
 
