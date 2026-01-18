@@ -334,6 +334,12 @@ stopBtn.addEventListener("click", () => {
   micStateEl.textContent = "Microphone idle.";
 });
 
+commandEl.addEventListener("input", () => {
+  const command = commandEl.value.trim();
+  if (!command) return;
+  applyLocalPreview(command);
+});
+
 planBtn.addEventListener("click", async () => {
   try {
     const command = commandEl.value.trim();
