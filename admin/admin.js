@@ -61,6 +61,22 @@ const speak = (text) => {
   speechSynthesis.speak(utter);
 };
 
+const clickSound = () => {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = 520;
+    gain.gain.value = 0.06;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.06);
+  } catch (_) {
+    // ignore
+  }
+};
+
 const resetPreview = () => {
   if (!previewStage) return;
   previewEyebrow.textContent = "AI-Driven Growth Stack";
@@ -405,3 +421,9 @@ if (previewSpeak) {
     speak(summary);
   });
 }
+
+document.addEventListener("click", (event) => {
+  if (event.target.closest("button, a")) {
+    clickSound();
+  }
+});
