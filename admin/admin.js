@@ -75,11 +75,19 @@ const resetPreview = () => {
 
 const applyLocalPreview = (command) => {
   if (!command || !previewStage) return;
+  if (previewExtras) previewExtras.innerHTML = "";
   const text = command.toLowerCase();
+  const urlMatch = command.match(/https?:\/\/\S+/);
+  const hexMatch = command.match(/#([0-9a-fA-F]{3,6})/);
+  const sayMatch = command.match(/say\s+(.+)/i);
+  const fontMatch = command.match(/font\s+(to|is|=)?\s*([a-zA-Z0-9\s-]+)/i);
 
   // headline changes
   if (text.includes("headline") || text.includes("top text")) {
     previewHeadline.textContent = command;
+  }
+  if (sayMatch) {
+    previewHeadline.textContent = sayMatch[1].trim();
   }
 
   // subhead changes
@@ -99,6 +107,15 @@ const applyLocalPreview = (command) => {
       previewCta.style.background = c;
     }
   });
+  if (hexMatch) {
+    previewHeadline.style.color = `#${hexMatch[1]}`;
+    previewCta.style.background = `#${hexMatch[1]}`;
+  }
+
+  // font changes
+  if (fontMatch) {
+    previewHeadline.style.fontFamily = `'${fontMatch[2].trim()}', "Playfair Display", serif`;
+  }
 
   // circles / rounded
   if (text.includes("circle")) {
@@ -114,6 +131,25 @@ const applyLocalPreview = (command) => {
   // background hue
   if (text.includes("blue")) {
     previewStage.style.background = "linear-gradient(135deg, rgba(80,120,255,0.15), rgba(20,30,60,0.6))";
+  }
+
+  if (previewExtras && urlMatch) {
+    if (text.includes("video")) {
+      const block = document.createElement("div");
+      block.className = "preview-extra-card";
+      block.innerHTML = `<h4>Video</h4><video controls muted playsinline style="width:100%;border-radius:12px;"><source src="${urlMatch[0]}" type="video/mp4"></video>`;
+      previewExtras.appendChild(block);
+    } else if (text.includes("music") || text.includes("audio")) {
+      const block = document.createElement("div");
+      block.className = "preview-extra-card";
+      block.innerHTML = `<h4>Audio</h4><audio controls src="${urlMatch[0]}"></audio>`;
+      previewExtras.appendChild(block);
+    } else if (text.includes("image") || text.includes("picture")) {
+      const block = document.createElement("div");
+      block.className = "preview-extra-card";
+      block.innerHTML = `<h4>Image</h4><img src="${urlMatch[0]}" style="width:100%;border-radius:12px;" alt="Preview image">`;
+      previewExtras.appendChild(block);
+    }
   }
 };
 
